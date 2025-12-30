@@ -1,6 +1,6 @@
 Number of pieces needed for the final mosaic:
-- white: 0
-- black: 0
-- yellow: 0
-- light gray: 1
-- dark gray: 0
+- white: 189
+- black: 362
+- yellow: 656
+- light gray: 943
+- dark gray: 154

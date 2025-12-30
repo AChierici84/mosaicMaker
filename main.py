@@ -75,6 +75,10 @@ def mosaic_maker(path:str):
 
     # Initialize a true 48x48 mosaic grid
     grid_mosaic_48x48 = np.zeros((48, 48, 3), dtype=np.uint8)
+    
+                
+    # Count the number of pieces needed for each color in the final mosaic
+    final_color_counts = {color_name: 0 for color_name in colors.keys()}
 
     # Create a list of BGR colors from the predefined 'colors' dictionary
     fixed_colors_bgr = []
@@ -111,9 +115,6 @@ def mosaic_maker(path:str):
             if dominant_color_bgr is not None:
                 # Convert BGR to RGB for matplotlib display
                 grid_mosaic_48x48[i, j] = dominant_color_bgr[[2, 1, 0]] # OpenCV BGR to Matplotlib RGB
-            
-                # Count the number of pieces needed for each color in the final mosaic
-                final_color_counts = {color_name: 0 for color_name in colors.keys()}
                 
                 # Update final color counts
                 # Find the name of the dominant_color_bgr
