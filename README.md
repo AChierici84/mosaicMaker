@@ -41,7 +41,7 @@ Punti di miglioramenta:
  * pulizia del background
  * in caso di più soggetti rendere possibile selezionare il soggetto desiderato
 
-**Nota**: per scegliere la graglia da realizzare si consiglia sempre di osservarla da una certa distanza perchè il mosaico è pensato per essere appeso ad una parete.
+**Nota**: per scegliere la griglia da realizzare si consiglia sempre di osservarla da una certa distanza perchè il mosaico è pensato per essere appeso a una parete.
 
 
 
