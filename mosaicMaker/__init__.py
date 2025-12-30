@@ -1,0 +1,1 @@
+from mosaicMaker.mosaic import mosaic_maker
