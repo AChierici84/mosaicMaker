@@ -45,48 +45,47 @@ def mosaic_maker(path:str):
 
     labels = kmeans.predict(data)
 
-    # Get the cluster centers (these are in BGR because the input 'image' is BGR)
+    # recupero i centri dei cluster
     kmeans_centers_bgr = kmeans.cluster_centers_
 
-    # Create a list of BGR colors from the predefined 'colors' dictionary
-    # The 'colors' dictionary stores RGB, so we convert them to BGR for comparison
+    # creo una lista di colori fissi in BGR
     fixed_colors_bgr = []
     for r, g, b in colors.values():
         fixed_colors_bgr.append((b, g, r))
     fixed_colors_bgr = np.array(fixed_colors_bgr, dtype=np.uint8)
 
-    # --- New logic for random unique assignment ---
+    # Numero di cluster
     num_clusters = len(colors.keys())
 
-    # Create a random permutation of indices for the fixed colors
+    # Genera una permutazione casuale degli indici dei cluster
     random_indices = np.random.permutation(num_clusters)
 
     new_centers = np.zeros((num_clusters, 3), dtype=np.uint8)
 
-    # Assign each K-Means cluster a unique, randomly chosen fixed color
+    # Assegna i colori fissi ai nuovi centri in base alla permutazione casuale
     for i in range(num_clusters):
         new_centers[i] = fixed_colors_bgr[random_indices[i]]
 
-    # Use these new, fixed centers to create the posterized image
+    # Crea l'immagine posterizzata sostituendo i colori originali con i nuovi centri
     posterized_image = new_centers[labels]
     posterized_image = posterized_image.reshape(image.shape)
 
     block_size_final = posterized_image.shape[0] // 48
 
-    # Initialize a true 48x48 mosaic grid
+    # inizializzo la griglia 48x48
     grid_mosaic_48x48 = np.zeros((48, 48, 3), dtype=np.uint8)
     
                 
-    # Count the number of pieces needed for each color in the final mosaic
+    # Initialize final color counts
     final_color_counts = {color_name: 0 for color_name in colors.keys()}
 
-    # Create a list of BGR colors from the predefined 'colors' dictionary
+    # creo una lista di colori fissi in BGR
     fixed_colors_bgr = []
     for r, g, b in colors.values():
         fixed_colors_bgr.append((b, g, r))
     fixed_colors_bgr = np.array(fixed_colors_bgr, dtype=np.uint8)
 
-    # Iterate through the 48x48 grid
+    # itero su ogni blocco 
     for i in range(48):
         for j in range(48):
             start_row = i * block_size_final
@@ -111,13 +110,13 @@ def mosaic_maker(path:str):
                     max_count = count
                     dominant_color_bgr = np.array(color_bgr_tuple, dtype=np.uint8)
 
-            # Store the dominant color directly into the 48x48 grid_mosaic
+            # salvo il colore dominante nella griglia 48x48
             if dominant_color_bgr is not None:
-                # Convert BGR to RGB for matplotlib display
+                # Converti BGR a RGB per Matplotlib
                 grid_mosaic_48x48[i, j] = dominant_color_bgr[[2, 1, 0]] # OpenCV BGR to Matplotlib RGB
                 
-                # Update final color counts
-                # Find the name of the dominant_color_bgr
+                # aggiorno il conteggio dei colori finali
+                # Trova il nome del colore corrispondente
                 for color_name, rgb_value in colors.items():
                     bgr_value = np.array([rgb_value[2], rgb_value[1], rgb_value[0]], dtype=np.uint8) # Convert RGB to BGR array
                     if np.array_equal(dominant_color_bgr, bgr_value):
@@ -125,29 +124,32 @@ def mosaic_maker(path:str):
                         break
                 
 
-    # Display the 48x48 mosaic grid
-    plt.figure(figsize=(10, 10)) # Use a larger figure size for better visibility
+    # mostra la griglia 48x48
+    plt.figure(figsize=(10, 10)) # Set figure size
     plt.imshow(grid_mosaic_48x48)
     plt.title('Mosaic Grid (48x48 pixels) with Dominant Colors')
-    plt.axis('off') # Hide axes
-    plt.grid(True)
+    plt.axis('off') # nasocndo gli assi
     plt.show()
 
-    # Print the final color counts
+    #  stampo il numero di pezzi necessari per ogni colore
     print("\nNumber of pieces needed for the final mosaic:")
     for color_name, count in final_color_counts.items():
         print(f"- {color_name}: {count}")
+        
+    """
+    CREAZIONE IMMAGINE FINALE 1440x1440 CON CERCHI
+    """
 
     output_image_size = 1440
     num_blocks_per_side = 48
     block_size_px = output_image_size // num_blocks_per_side # 1440 / 48 = 30
 
-    # Initialize the large output image
+    # Inizializzo l'immagine finale
     final_lego_mosaic = np.zeros((output_image_size, output_image_size, 3), dtype=np.uint8)
 
-    # Get the BGR values for light gray, black, and white
+    # Prepara i colori necessari in BGR
     light_gray_rgb = colors['light gray']
-    light_gray_bgr = (light_gray_rgb[2], light_gray_rgb[1], light_gray_rgb[0]) # Convert RGB from dict to BGR for OpenCV
+    light_gray_bgr = (light_gray_rgb[2], light_gray_rgb[1], light_gray_rgb[0]) # Convert to BGR
 
     black_rgb = colors['black']
     black_bgr = (black_rgb[2], black_rgb[1], black_rgb[0])
@@ -155,42 +157,42 @@ def mosaic_maker(path:str):
     white_rgb = colors['white']
     white_bgr = (white_rgb[2], white_rgb[1], white_rgb[0])
 
-    for i in range(num_blocks_per_side): # Iterate through rows of the 48x48 grid
-        for j in range(num_blocks_per_side): # Iterate through columns of the 48x48 grid
-            # Get the color for the current block from the 48x48 grid (it's in RGB as stored in grid_mosaic_48x48)
+    for i in range(num_blocks_per_side): # itero sui righe della griglia 48x48
+        for j in range(num_blocks_per_side): # itero sulle colonne della griglia 48x48
+            # Recupero il colore dominante del blocco
             block_color_rgb = grid_mosaic_48x48[i, j]
-            # Convert to BGR for OpenCV operations
+            # Converti RGB a BGR
             block_color_bgr = (block_color_rgb[2], block_color_rgb[1], block_color_rgb[0])
 
-            # Calculate the top-left corner of the block in the large 1440x1440 image
+            # calcolo le coordinate del blocco nell'immagine finale
             start_x = j * block_size_px
             start_y = i * block_size_px
             end_x = (j + 1) * block_size_px
             end_y = (i + 1) * block_size_px
 
-            # Fill the entire block area with its dominant color
+            # Riempio il blocco con il colore dominante
             final_lego_mosaic[start_y:end_y, start_x:start_x + block_size_px] = block_color_bgr
 
-            # Determine circle color based on block_color_bgr
+            # Determino il colore del cerchio
             circle_color_bgr = light_gray_bgr
             if np.array_equal(block_color_bgr, light_gray_bgr) or np.array_equal(block_color_bgr, black_bgr):
                 circle_color_bgr = white_bgr
 
-            # Draw an empty circle in the center of the block
+            # Disegno il cerchio al centro del blocco
             center_x = start_x + block_size_px // 2
             center_y = start_y + block_size_px // 2
-            radius = block_size_px // 2 - 2 # A little smaller than half the block size for padding
-            cv2.circle(final_lego_mosaic, (center_x, center_y), radius, circle_color_bgr, 1) # 1 for an empty circle with 1px thickness
+            radius = block_size_px // 2 - 2 # un po' di margine
+            cv2.circle(final_lego_mosaic, (center_x, center_y), radius, circle_color_bgr, 1) # cerchio vuoto con 1 pixel di spessore 
 
     cv2.imwrite(path.split('.')[0]+'_mosaic.png', final_lego_mosaic)
     print("Final Lego mosaic image saved as "+path.split('.')[0]+'_mosaic.png')
     
-    # Display the final Lego mosaic
+    # mostra l'immagine finale
     cv2.imshow('Final Lego Mosaic', final_lego_mosaic)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-    #salva il numero di pezzi in un file di testo
+    # salvo le informazioni sui pezzi in un file di testo
     with open(path.split('.')[0]+'_mosaic_info.txt', 'w') as f:
         f.write("Number of pieces needed for the final mosaic:\n")
         for color_name, count in final_color_counts.items():
