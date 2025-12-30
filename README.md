@@ -1,7 +1,7 @@
 # Mosaic Maker
-Un lego mosaic maker per le immagini basato sul sito: [https://www.lego.com/it-it/mosaic-maker](https://www.lego.com/it-it/mosaic-maker)
+Riproduzione del [Lego Mosaic Maker](https://www.lego.com/it-it/mosaic-maker).
 
-L'idea è quella di trasformare un'immagine in un mosaico lego 48x48 con 5 colori base:
+L'idea è quella di trasformare un'immagine in un mosaico Lego 48x48 con 5 colori base:
 * bianco
 * giallo
 * nero
