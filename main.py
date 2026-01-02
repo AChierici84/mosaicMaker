@@ -2,7 +2,7 @@ import requests
 import cv2
 import numpy as np
 
-from mosaicMaker.mosaic import mosaic_maker
+from mosaicMaker.mosaic import mosaic_maker, mosaic_maker_color
 
 
 def download_image(url):
@@ -22,6 +22,6 @@ if __name__ == "__main__":
     cv2.imwrite(image_path, image)
     
     # Crea il mosaico
-    mosaic_maker(image_path)
+    mosaic_maker_color(image_path, 5, output_size=1440, num_blocks_per_side=40)
     
 

@@ -1,0 +1,12 @@
+Colors used in the mosaic:
+- Nougat: RGB(187, 128, 90)
+- Aqua: RGB(211, 242, 234)
+- Light_Nougat: RGB(225, 190, 161)
+- Olive_Green: RGB(119, 119, 78)
+- Reddish_Brown: RGB(95, 49, 9)
+Number of pieces needed for the final mosaic:
+- Nougat: 79
+- Aqua: 974
+- Light_Nougat: 221
+- Olive_Green: 721
+- Reddish_Brown: 309

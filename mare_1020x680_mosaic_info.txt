@@ -1,6 +1,12 @@
+Colors used in the mosaic:
+- Aqua: RGB(211, 242, 234)
+- Bright_Blue: RGB(30, 90, 168)
+- Medium_Azur: RGB(104, 195, 226)
+- Earth_Blue: RGB(25, 50, 90)
+- Bright_Bluish_Green: RGB(0, 152, 148)
 Number of pieces needed for the final mosaic:
-- white: 769
-- black: 419
-- yellow: 473
-- light gray: 415
-- dark gray: 228
+- Aqua: 331
+- Bright_Blue: 288
+- Medium_Azur: 540
+- Earth_Blue: 291
+- Bright_Bluish_Green: 150
