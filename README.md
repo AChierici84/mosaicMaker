@@ -43,6 +43,22 @@ Punti di miglioramenta:
 
 **Nota**: per scegliere la griglia da realizzare si consiglia sempre di osservarla da una certa distanza perchè il mosaico è pensato per essere appeso a una parete.
 
+Nel branch **color-mosaic** è possibile trovare una versione a **colori**, che permette anche di selezionare la **grandezza della base lego** e dell'immagine di output.
+I colori sono stati rimappati basandosi sullo store lego e sui mattoncini 1x1 disposnibili:
+
+<img width="394" height="592" alt="pattern" src="https://github.com/user-attachments/assets/ad8f3303-bad4-410c-b52e-e824b828bd30" />
+
+Viene selezionato quello più vicino al colore del cluster center individuato.
+
+
+|  Immagine orginale | Mosaico               |
+|--------------------|-----------------------|
+|![mare_1020x680](https://github.com/user-attachments/assets/f5dff7b6-a29b-4473-9055-be36de0fb720)|<img width="1440" height="1440" alt="mare_1020x680_mosaic" src="https://github.com/user-attachments/assets/f8041429-fb70-46d5-ae0c-7008d639f8fd" />|
+|![mucca](https://github.com/user-attachments/assets/b1bf1810-36a5-4585-be11-20d3197a4971)|<img width="1440" height="1440" alt="mucca_mosaic" src="https://github.com/user-attachments/assets/9462490e-bc11-4289-8130-d38505d31c5f" />|
+
+
+
+
 
 
 
